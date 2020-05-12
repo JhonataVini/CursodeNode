@@ -1,6 +1,16 @@
 const connection = require('../database/connection');
 
 module.exports = {
+    //Listar usuario
+    async listByid(req, res){
+        const { id } = req.params;
+
+        const usuarios = await connection('usuario')
+        .where('id', id)
+        .select('*');
+        return res.json(usuarios);
+    },
+
 
     //Listar usuario
     async list(req, res){
@@ -26,15 +36,15 @@ module.exports = {
 
     //Criar usuario
     async create(req, res) {
-        const {nome, numero, numero_chip, dt_exp_creditos, dt_pagamento, status} = req.body;
+        const {nome, numero, numchip, dtexp, dtpag, status} = req.body;
         const login_id = req.headers.authorization;
 
       const {id} = await connection('usuario').insert({
           nome,
           numero,
-          numero_chip,
-          dt_exp_creditos,
-          dt_pagamento,
+          numchip,
+          dtexp,
+          dtpag,
           status,
           login_id  
         });
@@ -57,5 +67,33 @@ module.exports = {
 
      return res.status(204).send();
     },
+
+    //Editar
+    async Edit(req, res) {
+        const { id } = req.params;
+        const {nome, numero, numchip, dtexp, dtpag, status} = req.body;
+
+        const login_id = req.headers.authorization;
+
+        const usuario = await connection('usuario')
+        .where('id', id)
+        .select('login_id')
+        .first();
+
+        if(usuario.login_id != login_id) {
+            return res.status(401).json({ error: 'Operation not permitted'});
+        }
+        await connection('usuario').where('id', id).update({
+            nome,
+            numero,
+            numchip,
+            dtexp,
+            dtpag,
+            status,
+            login_id  
+          });
+
+     return res.status(204).send();
+    }
 
 }

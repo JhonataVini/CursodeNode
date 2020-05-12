@@ -18,8 +18,10 @@ routes.get('/profile', ProfileController.index);
 
 //rota de criação usuario
 routes.get('/usuario', UsuarioController.list);
+routes.get('/usuario/list/:id', UsuarioController.listByid);
 routes.post('/usuario', UsuarioController.create);
 routes.delete('/usuario/:id', UsuarioController.delete);
+routes.put('/usuario/:id', UsuarioController.Edit);
 
 // sessão do login
  routes.post('/sessions', SessionController.create);

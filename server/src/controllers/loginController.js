@@ -7,8 +7,6 @@ module.exports = {
     async index(req, res){
 
         const logins = await connection('login').select('*');
-        
-
         return res.json(logins);
     },
 

@@ -4,9 +4,9 @@ exports.up = function(knex) {
         table.increments();
         table.string('nome').notNullable();
         table.string('numero',15).notNullable();
-        table.string('numero_chip',15).notNullable();
-        table.string('dt_exp_creditos',15).notNullable();
-        table.string('dt_pagamento',15).notNullable();
+        table.string('numchip',15).notNullable();
+        table.string('dtexp',15).notNullable();
+        table.string('dtpag',15).notNullable();
         table.string('status').notNullable();
 
         table.string('login_id').notNullable();
