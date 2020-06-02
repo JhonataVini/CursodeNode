@@ -15,8 +15,6 @@ export default function Profile() {
     const loginId = localStorage.getItem('loginId');
     const loginName = localStorage.getItem('loginName');
 
-   let state = { currentSort: 'default'};
-   const currentSort = state;
 
     useEffect(() => {
         api.get('profile', {
@@ -27,33 +25,7 @@ export default function Profile() {
     })
     }, [loginId]);
 
-    // const sortTypes = {
-    //     up: {
-    //         class: 'sort-up',
-    //         fn: (a, b) => a.net_worth - b.net_worth
-    //     },
-    //     down: {
-    //         class: 'sort-down',
-    //         fn: (a, b) => b.net_worth - a.net_worth
-    //     },
-    //     default: {
-    //         class: 'sort',
-    //         fn: (a, b) => a
-    //     }
-    // };
-
-    // let onSortChange = () => {
-	// 	const { currentSort } = state;
-	// 	let nextSort;
-
-	// 	if (currentSort === 'down') nextSort = 'up';
-	// 	else if (currentSort === 'up') nextSort = 'default';
-	// 	else if (currentSort === 'default') nextSort = 'down';
-
-	// 	this.setState({
-	// 		currentSort: nextSort
-	// 	});
-	// };
+   
         //Deletar
      async function handleDelete(id) {
         try {
@@ -81,7 +53,22 @@ export default function Profile() {
     }
 
     var agora = moment(new Date(), "DD/MM/YYYY");
-    const sortedUsers = usuario.sort((user) => (moment(user.dtpag, "DD/MM/YYYY").diff(agora, "days")))
+    const sortedUsers = usuario.sort((user) => (moment(user.dtpag, "DD/MM/YYYY").diff(agora, "days")));
+const dataval = sortedUsers
+
+
+    var s = document.getElementsByTagName('tbody');
+    for (var i = 0; i < s.length; i++) {
+        if (s[i].getAttribute(dataval) === agora) {
+            if(dataval === (dataval > 15) ){
+                s.style.color="green"
+            }else if( dataval === (dataval < 6 && dataval > 1)){
+                s.stayle.color="yellow"
+            }else if(dataval === (dataval < 1) ){
+                s.stayle.color="red"
+            }
+        }
+    }
 
 
 
@@ -104,13 +91,7 @@ return (
                    <th>Nunmero do chip</th>|
                    <th>Data de expiração dos créditos</th>|
                    <th>Data de pagamento</th>|
-                   <th>
-                               <button
-                            //    onClick={onSortChange}
-                               >
-                               Status
-								</button>
-                    </th> |
+                   <th>Status</th> |
                    <th>Excluir</th>|
                    <th>editar</th>
                  </tr>
@@ -123,7 +104,8 @@ return (
                    <td>{user.numero}</td>|
                    <td>{user.numchip}</td>|
                    <td>{user.dtexp}</td>|
-                   <td>{user.dtpag}</td>|
+                   <td>
+                       {user.dtpag}</td>|
                    <td>
                        {user.status}</td>|
                    <td>
