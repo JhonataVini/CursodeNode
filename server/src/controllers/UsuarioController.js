@@ -22,7 +22,7 @@ module.exports = {
         const usuarios = await connection('usuario')
         .join('login', 'login_id', '=', 'usuario.login_id')
         .limit(100) 
-        .offset((page -1) * 100)
+        .offset((page -1) * 43)
         .select([
             'usuario.*', 
             'login.name', 

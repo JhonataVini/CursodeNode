@@ -1,12 +1,13 @@
 
 import React, { useState ,useEffect } from 'react';
 import './styles.css';
-import vivo from '../../assets/vivo.svg'
+import vivo from '../../assets/vivo.svg';
 import { Link, useHistory } from 'react-router-dom';
-import { FiPower, FiTrash2, FiEdit3 } from 'react-icons/fi'
-import api from '../../services/api'
-import moment from "moment"
-
+import { FiPower, FiTrash2, FiEdit3 } from 'react-icons/fi';
+import api from '../../services/api';
+import moment from "moment";
+import NavBar from '../Navbar';
+import Table from 'react-bootstrap/Table'
 
 export default function Profile() {
     const [usuario, setUsuario] = useState([]);
@@ -47,14 +48,14 @@ export default function Profile() {
     }
 
     //Sair
-    async function handleLogout() {
-        localStorage.clear();
-        history.push('/');
-    }
+    // async function handleLogout() {
+    //     localStorage.clear();
+    //     history.push('/');
+    // }
 
     var agora = moment(new Date(), "DD/MM/YYYY");
     const sortedUsers = usuario.sort((user) => (moment(user.dtpag, "DD/MM/YYYY").diff(agora, "days")));
-const dataval = sortedUsers
+const dataval = sortedUsers.dtpag
 
 
     var s = document.getElementsByTagName('tbody');
@@ -73,57 +74,60 @@ const dataval = sortedUsers
 
 
 return (
+    <div>
+        <NavBar/>
     <div className="profile-container">
         <header>
-         <img  className="img" src={vivo} alt="Vivo Teste"/>
-            <span>Bem vindo, {loginName}</span>
-         <Link className="button" to="/user/new"> Cadastrar novo caso</Link>
-         <button onClick={handleLogout} type="button">
-             <FiPower size={18} color="#2c2ce0"/>
-         </button>
+         {/* <img  className="img" src={vivo} alt="Vivo Teste"/> */}
+         <h1 className="Teste">Usuários cadastrados</h1>
+         <Link className="button" to="/user/new"> Cadastrar novo cliente</Link>
         </header>
-        <h1>Usuários cadastrados</h1>
-        <table>
-                 <thead>
-                 <tr>
-                   <th>Nome</th>|
-                   <th>Numero</th>|
-                   <th>Nunmero do chip</th>|
-                   <th>Data de expiração dos créditos</th>|
-                   <th>Data de pagamento</th>|
-                   <th>Status</th> |
-                   <th>Excluir</th>|
-                   <th>editar</th>
-                 </tr>
-                 </thead>
-             {sortedUsers.map(user => (
-
-                 <tbody>
-                 <tr key={user.id}>
-                   <td>{user.nome}</td>|
-                   <td>{user.numero}</td>|
-                   <td>{user.numchip}</td>|
-                   <td>{user.dtexp}</td>|
-                   <td>
-                       {user.dtpag}</td>|
-                   <td>
-                       {user.status}</td>|
-                   <td>
-                       <button onClick={() => handleDelete(user.id)} type="button">
-                       <FiTrash2 size={20} color="#a8a8b3"/>
-                       </button>
-                    </td>|
-                    <td>
-                       <button type="button">
-                       <FiEdit3 onClick={ () => Editar(user.id)} size={20} color="#a8a8b3"/>
-                       </button>
-                    </td>
-                 </tr>
-                 </tbody>
-             )
-             )}
-        </table>
-
+        <div class="container">
+        <div class="container scroll">
+          <Table striped bordered hover size="lg">
+            <thead>
+              <tr >    
+              <th>Nome</th>
+              <th>Numero</th>
+              <th>Numero do Chip</th>
+              <th>Data dos Creditos</th>
+              <th>Data Pagamento</th>
+              <th>Status</th>
+              <th>Excluir</th>
+              <th>Editar</th></tr>
+            </thead>
+            {sortedUsers.map(user => (
+            <tbody>
+             <tr key={user.id}> 
+                <td >
+                 {user.nome}</td>
+                <td>
+                 {user.numero}</td>
+                <td>
+                 {user.numchip}</td>
+                <td>
+                 {user.dtexp}</td>
+                <td>
+                 {user.dtpag}</td>
+                <td>
+                 {user.status}</td>
+                <td>
+                 <button onClick={() => handleDelete(user.id)} type="button">
+                 <FiTrash2 size={20} color="#a8a8b3"/>
+                 </button></td>
+                <td>
+                 <button type="button">
+                 <FiEdit3 onClick={ () => Editar(user.id)} size={20} color="#a8a8b3"/>
+                 </button>
+                </td>
+             </tr>
+              </tbody>
+              )
+              )}
+          </Table>
+        </div>
+      </div>
+    </div>
     </div>
 );
 }

@@ -4,6 +4,7 @@ import vivo from '../../assets/vivo.svg'
 import { Link, useHistory  } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi'
 import api from '../../services/api'
+import NavBar from '../Navbar';
 
 export default function Update() {
     const [nome, setNome] = useState('');
@@ -31,27 +32,6 @@ export default function Update() {
     })
     }, [localId]);
 
-    // async function teste(localId) {
-
-    //     const datas = async () => { 
-    //         const res = await api.get(`usuario/list/${localId}`);
-    //          setNome(res.data[0].nome);
-    //     //     numero(res.data[0].setNumero);
-    //     //     numchip(res.data[0].setNumchip);
-    //     //     dtexp(res.data[0].setDtexp);
-    //     //     dtpag(res.data[0].setDtpag);
-    //     //     status(res.data[0].setStatus);
-
-    //     console.log(res.data[0].dtpag);
-    //      }
-    //     //  alert('teste')
-    //    datas();
-
-    // }
-    // teste(localId);
-
-
-
     async function handleUpdate() {
         const data = ({
             nome, 
@@ -68,7 +48,6 @@ export default function Update() {
                         Authorization: loginId
                     }
                 })
-                history.push('/profile');
             } catch(err) {
                 alert('Erro na atualização, tente novamente');
             }
@@ -76,8 +55,10 @@ export default function Update() {
     }
 
     return (
-        <div className=".Edit-container">
-        <div className="content">
+        <div>
+            <NavBar/>
+         <div className=".Edit-container">
+          <div className="content">
             <section>
              <img  className="img" src={vivo} alt="Vivo Teste"/>
              <h1>Editar cadastro do usuário</h1>
@@ -132,6 +113,7 @@ export default function Update() {
              <button className="button" type="submit">Atualizar</button>
             </form>
         </div>
+      </div>
     </div>
     )
 }

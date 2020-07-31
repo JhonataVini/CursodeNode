@@ -18,7 +18,7 @@ export default function Logon() {
             
             localStorage.setItem('loginId', id);
             localStorage.setItem('loginName', response.data.name);
-            history.push('/profile');
+            history.push('/home');
         } catch (err) {
             alert('Falha no Login, tente novamente');
         }
